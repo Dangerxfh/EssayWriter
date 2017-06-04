@@ -28,9 +28,8 @@
 
     .big-link { margin-top: 100px; text-align: center; font-size: 18px; color: #a94454; }
 
+    #btn_login{    margin-left: 100px;  width: 75px;}
 </style>
-
-
 <body>
 <c:import url="top.jsp"/>
 <div class="container">
@@ -71,26 +70,54 @@
         </div>
     </div>
 </div>
-    <a href="essay/write">写文章</a>
-    <a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade">
-        jquery1
-    </a>
     <div id="myModal" class="reveal-modal">
        <h4 class="text-light">登录</h4>
-            <form action="user/login" method="post">
+            <form id="loginForm" method="post">
                 <div class="input-control text">
                     <span class="mif-user prepend-icon"></span>
                     <input  name="username" placeholder="用户名"/>
                 </div>
                 <div class="input-control text">
                     <span class="mif-lock prepend-icon"></span>
-                    <input type="password" name="userpass" placeholder="密码"/>
+                    <input  type="password" name="userpass" placeholder="密码"/>
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-sm btn-success" type="submit">登录</button>
+                    <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名或密码错误</h4>
+                <div class="input-control text">
+                    <button class="btn btn-sm btn-primary" type="button" id="btn_login" onclick="doUpload()" >登录</button>
                 </div>
             </form>
-        <a class="close-reveal-modal">&#215;</a>
     </div>
+<script type="text/javascript">
+    
+    $(function () {
+        $("input").click(function () {
+            $("#login_msg").hide();
+        });
+        
+    })
+    function doUpload() {
+        $.ajax({
+            url:"user/login",
+            type: 'POST',
+            data:  new FormData($('#loginForm')[0]),
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                if(returndata.login_msg=='error'){
+                    document.getElementById("login_msg").style.display="block";
+                }
+                if(returndata.login_msg=='success'){
+                    window.location.href="beforeindex";
+                }
+
+            },
+            error: function (returndata) {
+                document.getElementById("myModal").onclick();
+            }
+        });
+    }
+</script>
 </body>
 </html>

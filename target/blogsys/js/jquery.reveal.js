@@ -26,7 +26,7 @@
 	    	animation: 'fadeAndPop', //fade, fadeAndPop, none
 		    animationspeed: 300, //how fast animtions are
 		    closeonbackgroundclick: true, //if you click background will modal close?
-		    dismissmodalclass: 'close-reveal-modal' //the class of a button or element that will close an open modal
+		    //dismissmodalclass: 'close-reveal-modal' //the class of a button or element that will close an open modal
     	}; 
     	
         //Extend dem' options
@@ -89,7 +89,7 @@
 					if(options.animation == "fadeAndPop") {
 						modalBG.delay(options.animationspeed).fadeOut(options.animationspeed);
 						modal.animate({
-							"top":  $(document).scrollTop()-topOffset + 'px',
+							"top": '70px',
 							"opacity" : 0
 						}, options.animationspeed/2, function() {
 							modal.css({'top':topMeasure, 'opacity' : 1, 'visibility' : 'hidden'});

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Fog
@@ -11,21 +12,80 @@
     <title>用户登陆</title>
 </head>
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<body>
-    <div class="container">
-        <h1>用户登陆</h1>
-        <form action="login" method="post">
-            <div class="form-group">
-                <input class="form-control" name="username" placeholder="用户名"/>
-            </div>
+<link rel="stylesheet" type="text/css" href="../css/reveal.css">
+<link rel="stylesheet" type="text/css" href="../css/metro-icons.css">
+<link rel="stylesheet" type="text/css" href="../css/metro.css">
 
-            <div class="form-group password-field">
-                <input class="form-control" type="password" name="userpass" placeholder="密码"/>
+<script type="text/javascript" src="../js/jquery.reveal.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<style type="text/css">
+
+    #logdiv{
+        margin-top: 20px;
+        width: 15rem;
+    }
+    #myModal{
+        opacity: 0.8;
+        background-color: aliceblue;
+        visibility: visible;
+        margin-left: -180px;
+        width: 350px;
+        top: 170px;
+    }
+    #btn_login{
+        width: 85px;
+    }
+</style>
+<body style="background-image:url(../img/login_back.jpg) ">
+    <c:import url="../top.jsp"/>
+    <div id="myModal"  class="reveal-modal" style="display: block;">
+        <h4 class="text-light">登录</h4>
+        <form id="loginForm" method="post">
+            <div id="logdiv" class="input-control text" >
+                <span class="mif-user prepend-icon"></span>
+                <input  name="username" placeholder="用户名"/>
             </div>
-            <div class="form-group">
-                <button class="btn btn-success btn-sm" type="submit">登陆</button>
+            <div id="logdiv" class="input-control text" >
+                <span class="mif-lock prepend-icon"></span>
+                <input  type="password" name="userpass" placeholder="密码"/>
+            </div>
+            <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名或密码错误</h4>
+            <div id="logdiv" class="input-control text">
+                <button class="btn btn-sm btn-primary" type="button" id="btn_login" onclick="doUpload()" >登录</button>
+                <a class="text-light" style="font-size: 13px; margin-left: 22px;" href="user/toregister">没有账号？马上注册</a>
             </div>
         </form>
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+                $("input").click(function () {
+                $("#login_msg").hide();
+            });
+        })
+        function doUpload() {
+            $.ajax({
+                url:"user/login",
+                type: 'POST',
+                data:  new FormData($('#loginForm')[0]),
+                async: true,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (returndata) {
+                    if(returndata.login_msg=='error'){
+                        document.getElementById("login_msg").style.display="block";
+                    }
+                    if(returndata.login_msg=='success'){
+                        window.location.href="beforeindex";
+                    }
+
+                },
+                error: function (returndata) {
+                    document.getElementById("myModal").onclick();
+                }
+            });
+        }
+    </script>
 </body>
 </html>

@@ -1,13 +1,13 @@
 package com.xfh.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xfh.model.User;
@@ -31,16 +31,36 @@ public class UserController {
 	    return "user/user_login";
     }
 
-    @RequestMapping(value = "/login",method =RequestMethod.POST )
-    public  String userLogin(@ModelAttribute User user, HttpSession session){
-        User cur_user=userService.userLogin(user);
-        if(cur_user!=null) {
-            session.setAttribute("user", cur_user);
-        return "redirect:/beforeindex";
-    }
-        return  "redirect:/user/tologin";
-    }
+	//登陆
+	@RequestMapping(value = "/login",method =RequestMethod.POST )
+	@ResponseBody
+	public Map<String,Object> userLogin(@ModelAttribute User user, HttpSession session){
+		System.out.println(user.getUsername()+" "+user.getUsername());
+		User cur_user=userService.userLogin(user);
+		Map<String,Object> map=new HashMap<String,Object>();
+		if(cur_user!=null) {
+			session.setAttribute("user", cur_user);
+			map.put("login_msg","success");
+		}
+		else{
+			map.put("login_msg","error");
+		}
+		return  map;
+	}
 
+	//跳转到注册页面
+	@RequestMapping(value = "/toregister")
+	public  String toRegister(){
+		return "user/user_register";
+	}
+	//注销
+	@RequestMapping(value = "/logout")
+	public  String logout(HttpSession session){
+		session.setAttribute("user",null);
+		return "redirect:/tologin";
+	}
+
+	//上传头像
 	@RequestMapping(value="/headimage",method=RequestMethod.POST)
 	public String headimage(@RequestParam("headimg") MultipartFile filePhoto) throws IOException{
 		/**基本配置*/
@@ -79,4 +99,6 @@ public class UserController {
 		      }
 		  return "image";
 	}
+
+
 }
