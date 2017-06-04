@@ -2,6 +2,8 @@ package com.xfh.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,7 @@ public class EssayController {
 	}
 
 	//添加文章
-	@RequestMapping(value="/add")
+	@RequestMapping(value="/addE")
 	public String add(@ModelAttribute("essay")Essay essay,Map<String,Object> map) throws Exception{
 		System.out.println(essay.getE_content());
 		Essay cur_essay=essayService.save(essay);
@@ -77,12 +79,21 @@ public class EssayController {
 	            filePath.mkdirs();
 	        }
 
+	        Integer imgnum= (Integer) request.getSession().getAttribute("imgnum");
+	        if(imgnum==null)
+	        	imgnum=1;
+	        else
+	        	imgnum++;
+	        request.getSession().setAttribute("imgnum",imgnum);
+			SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmSS");
+			String imgurl="p"+format.format(new Date())+imgnum+".jpg";
+
 	        //最终文件名
-	        File realFile=new File(rootPath+File.separator+attach.getOriginalFilename());
-	        FileUtils.copyInputStreamToFile(attach.getInputStream(), realFile);
+			File realFile=new File(rootPath+File.separator+imgurl);
+			FileUtils.copyInputStreamToFile(attach.getInputStream(), realFile);
 
 	        //下面response返回的json格式是editor.md所限制的，规范输出就OK
-	        response.getWriter().write( "{\"success\": 1, \"message\":\"上传成功\",\"url\":\"staticresources/upload/" + attach.getOriginalFilename() + "\"}" );
+	        response.getWriter().write( "{\"success\": 1, \"message\":\"上传成功\",\"url\":\"staticresources/upload/" + imgurl + "\"}" );
 	    } catch (Exception e) {
 	        try {
 	            response.getWriter().write( "{\"success\":0}" );

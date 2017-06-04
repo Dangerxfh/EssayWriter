@@ -9,8 +9,9 @@ public class Essay {
 	private String e_title;
 	private String e_content;
 	private String e_date;
+	private Integer e_likes;
 	private  User userById;
-	
+
 	@Id
 	@GeneratedValue(strategy =GenerationType.AUTO)
 	@Column(name="id",nullable=false)
@@ -46,6 +47,16 @@ public class Essay {
 	}
 	public void setE_date(String e_date) {
 		this.e_date = e_date;
+	}
+
+	@Basic
+	@Column(name = "e_likes")
+	public Integer getE_likes() {
+		return e_likes;
+	}
+
+	public void setE_likes(Integer e_likes) {
+		this.e_likes = e_likes;
 	}
 
 	@ManyToOne
