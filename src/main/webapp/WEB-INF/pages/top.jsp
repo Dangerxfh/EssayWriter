@@ -17,8 +17,16 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>css/nav.css">
-    <script src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/nav.css">
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/reveal.css">
+    <link rel="stylesheet" type="text/css" href="css/metro-icons.css">
+    <link rel="stylesheet" type="text/css" href="css/metro.css">
+
+    <script type="text/javascript" src="js/jquery.reveal.js"></script>
+    <script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
             //如果用户不为空
@@ -31,9 +39,6 @@
 
                 //将“注销”文字显示在页面
                 $("#logout").show();
-
-                //将用户名的链接设置为用户详情页面
-                $("#login").attr('href','user/detail/projects');
             }
         });
     </script>
@@ -55,5 +60,30 @@
         欢迎，<span id="user_Name"></span><a href="#" class="big-link" data-reveal-id="myModal" data-animation="fade" id="login">请登录</a>&nbsp;&nbsp;<span><a href="user/logout" class="text-danger" id="logout" style="display: none;">注销</a></span>
     </div>
 </div>
+
+<div id="topLogin">
+    <div id="myModal" class="reveal-modal">
+        <h4 class="text-light">登录</h4>
+        <form id="loginForm" method="post">
+            <div class="input-control text">
+                <span class="mif-user prepend-icon"></span>
+                <input  name="username" placeholder="用户名"/>
+            </div>
+
+            <div class="input-control text">
+                <span class="mif-lock prepend-icon"></span>
+                <input  type="password" name="userpass" placeholder="密码"/>
+            </div>
+
+            <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名或密码错误</h4>
+
+            <div class="input-control text">
+                <button class="btn btn-sm btn-primary" type="button" id="btn_login" onclick="doUpload()" >登录</button>
+                <a class="text-light" style="font-size: 13px; margin-left: 4px;" href="user/toregister">没有账号？马上注册</a>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

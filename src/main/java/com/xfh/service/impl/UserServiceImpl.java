@@ -29,8 +29,14 @@ public class UserServiceImpl implements UserService{
         return  null;
     }
 
+    //注册
     @Override
-    public boolean userRegister(User user) {
-        return false;
+    public boolean userRegister(User user) throws Exception {
+        List<User> users=userDao.getByParam(User.class,"username",user.getUsername());
+        if(users.isEmpty()){
+            userDao.save(user);
+            return true;
+        }
+        return  false;
     }
 }

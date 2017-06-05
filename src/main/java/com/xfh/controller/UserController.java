@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,11 +54,26 @@ public class UserController {
 	public  String toRegister(){
 		return "user/user_register";
 	}
+
+	//注册
+	@ResponseBody
+	@RequestMapping(value = "/register",method = RequestMethod.POST)
+	public  Map<String,Object> userRegister(@ModelAttribute User user) throws Exception {
+		boolean reg=userService.userRegister(user);
+		Map<String,Object> map=new HashMap<String,Object>();
+		if(reg){
+			map.put("user",user);
+			map.put("reg_msg","success");
+		}
+		else
+			map.put("reg_msg","error");
+		return map;
+	}
 	//注销
 	@RequestMapping(value = "/logout")
 	public  String logout(HttpSession session){
 		session.setAttribute("user",null);
-		return "redirect:/tologin";
+		return "redirect:/user/tologin";
 	}
 
 	//上传头像

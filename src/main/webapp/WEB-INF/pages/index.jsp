@@ -28,7 +28,7 @@
 
     .big-link { margin-top: 100px; text-align: center; font-size: 18px; color: #a94454; }
 
-    #btn_login{    margin-left: 100px;  width: 75px;}
+    #btn_login{ width: 47px;}
 </style>
 <body>
 <c:import url="top.jsp"/>
@@ -70,23 +70,8 @@
         </div>
     </div>
 </div>
-    <div id="myModal" class="reveal-modal">
-       <h4 class="text-light">登录</h4>
-            <form id="loginForm" method="post">
-                <div class="input-control text">
-                    <span class="mif-user prepend-icon"></span>
-                    <input  name="username" placeholder="用户名"/>
-                </div>
-                <div class="input-control text">
-                    <span class="mif-lock prepend-icon"></span>
-                    <input  type="password" name="userpass" placeholder="密码"/>
-                </div>
-                    <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名或密码错误</h4>
-                <div class="input-control text">
-                    <button class="btn btn-sm btn-primary" type="button" id="btn_login" onclick="doUpload()" >登录</button>
-                </div>
-            </form>
-    </div>
+
+
 <script type="text/javascript">
     
     $(function () {
@@ -114,7 +99,7 @@
 
             },
             error: function (returndata) {
-                document.getElementById("myModal").onclick();
+                alert(returndata);
             }
         });
     }

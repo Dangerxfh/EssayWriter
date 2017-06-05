@@ -17,11 +17,7 @@ import com.xfh.service.EssayService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.xfh.model.Essay;
@@ -39,17 +35,19 @@ public class EssayController {
 	}
 
 	//添加文章
-	@RequestMapping(value="/addE")
-	public String add(@ModelAttribute("essay")Essay essay,Map<String,Object> map) throws Exception{
-		System.out.println(essay.getE_content());
+	@RequestMapping(value="/addE",method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> add(@ModelAttribute Essay essay) throws Exception{
+		Map<String,Object> map=new HashMap<String,Object>();
 		Essay cur_essay=essayService.save(essay);
 		if(cur_essay==null){ //添加文章失败
-			map.put("error_msg","文章已存在");
-			return "essay/essay_write";
+			map.put("essay_add","error");
 		}
-		//将write注入到页面(包括w_id)
-		map.put("essay",cur_essay);
-		return "redirect:/essay/detail/"+essay.getId();
+		else{  //添加成功
+			map.put("essay_add","success");
+			map.put("e_id",cur_essay.getId());
+		}
+		return map;
 	}
 	
 	//查看文章内容

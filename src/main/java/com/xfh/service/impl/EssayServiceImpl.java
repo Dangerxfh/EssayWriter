@@ -24,14 +24,12 @@ public class EssayServiceImpl implements EssayService {
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("e_title",essay.getE_title());
 		params.put("e_date",essay.getE_date());
-		System.out.println(essay.getE_date()+" "+essay.getE_title()+" "+essay.getE_content() );
 		//根据title和date查询
 		List<Essay> essays=essayDao.getByParams(1,Essay.class,params);
 		if(essays.isEmpty()){
 			essayDao.save(essay);
 			//查询刚刚插入的文章,以便获取w_id
 			essays=essayDao.getByParams(1,Essay.class,params);
-			System.out.println(essays.size());
 			return  essays.get(0);
 		}
 		return null;

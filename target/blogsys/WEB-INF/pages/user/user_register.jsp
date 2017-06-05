@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="../css/metro.css">
 
 <script type="text/javascript" src="../js/jquery.reveal.js"></script>
+<script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>
 <style type="text/css">
 
@@ -32,7 +33,7 @@
         width: 350px;
         top: 170px;
     }
-    #btn_login{
+    #btn_register{
         width: 85px;
     }
 </style>
@@ -51,31 +52,37 @@
         </div>
         <div id="logdiv" class="input-control text" >
             <span class="mif-lock prepend-icon"></span>
-            <input  type="password" name="userpass" class="pass2" placeholder="再次输入密码" required="required"/>
+            <input  type="password"  class="pass2" placeholder="再次输入密码" required="required"/>
         </div>
         <h4 class="text-light" id="passno" style="color: red; display: none;" >两次输入密码不一致</h4>
-        <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名或密码错误</h4>
+        <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名已存在</h4>
         <div id="logdiv" class="input-control text">
-            <button class="btn btn-sm btn-primary" type="button" id="btn_login" onclick="doUpload()" >登录</button>
-            <a class="text-light" style="font-size: 13px; margin-left: 22px;" href="user/toregister">没有账号？马上注册</a>
+            <button class="btn btn-sm btn-primary" type="button" id="btn_register" onclick="doUpload()" >注册</button>
+            <a class="text-light" style="font-size: 13px; margin-left: 22px;" href="user/tologin">已有账号,立即登录</a>
         </div>
     </form>
 </div>
 
 <script type="text/javascript">
     $(function () {
+
+        $("#topLogin").hide();
+        $(".navbar-right").hide();
         $("input").click(function () {
             $("#login_msg").hide();
             $("#passno").hide();
         });
 
-        if($(".pass1").val()!=$(".pass2").val()){
-            $("#passno").show();
-        }
+
     })
     function doUpload() {
+        if($(".pass1").val()!=$(".pass2").val()){
+            $("#passno").show();
+            return false;
+        }
+
         $.ajax({
-            url:"user/login",
+            url:"user/register",
             type: 'POST',
             data:  new FormData($('#loginForm')[0]),
             async: true,
@@ -83,11 +90,11 @@
             contentType: false,
             processData: false,
             success: function (returndata) {
-                if(returndata.login_msg=='error'){
+                if(returndata.reg_msg=='error'){
                     document.getElementById("login_msg").style.display="block";
                 }
-                if(returndata.login_msg=='success'){
-                    window.location.href="beforeindex";
+                if(returndata.reg_msg=='success'){
+                    window.location.href="user/tologin";
                 }
 
             },

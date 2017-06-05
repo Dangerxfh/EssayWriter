@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="../css/metro.css">
 
 <script type="text/javascript" src="../js/jquery.reveal.js"></script>
+<script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>
 <style type="text/css">
 
@@ -43,11 +44,11 @@
         <form id="loginForm" method="post">
             <div id="logdiv" class="input-control text" >
                 <span class="mif-user prepend-icon"></span>
-                <input  name="username" placeholder="用户名"/>
+                <input  name="username" placeholder="用户名" required="required"/>
             </div>
             <div id="logdiv" class="input-control text" >
                 <span class="mif-lock prepend-icon"></span>
-                <input  type="password" name="userpass" placeholder="密码"/>
+                <input  type="password" name="userpass" placeholder="密码" re/>
             </div>
             <h4 class="text-light" id="login_msg" style="color: red;display: none;">用户名或密码错误</h4>
             <div id="logdiv" class="input-control text">
@@ -59,7 +60,10 @@
 
     <script type="text/javascript">
         $(function () {
-                $("input").click(function () {
+
+            $("#topLogin").hide();
+            $(".navbar-right").hide();
+            $("input").click(function () {
                 $("#login_msg").hide();
             });
         })

@@ -50,14 +50,13 @@
 <body >
 <c:import url="../top.jsp"/>
 <div class="container">
-    <h1>简书--写文章</h1>
+    <h2>写文章</h2>
     <hr>
-    <form action="essay/addE" method="post">
-        <h2 style="display: inline;">标题</h2>
+    <form id="essayAddForm" method="post">
         <div class="form-group">
-            <input name="e_title" class="form-control"/>
+            <input name="e_title" placeholder="文章标题" class="form-control"/>
         </div>
-
+        <h4 id="add_msg" style="color: red; display: none;">文章标题已存在</h4>
         <div class="form-group">
             <input type="datetime-local" name="e_date" class="form-control"/>
         </div>
@@ -68,11 +67,41 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-success btn-large">提交</button>
+            <button type="button" id="btn_add" class="btn btn-success btn-large">提交</button>
         </div>
 
     </form>
 </div>
 
+<script type="text/javascript">
+    $(function () {
+        $("input").click(function () {
+            $("#add_msg").hide();
+        });
+
+        $("#btn_add").click(function () {
+            $.ajax({
+                url:"essay/addE",
+                type: 'POST',
+                data:  new FormData($('#essayAddForm')[0]),
+                async: true,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (returndata) {
+                    if(returndata.essay_add=='error'){
+                        document.getElementById("add_msg").style.display="block";
+                    }
+                    if(returndata.essay_add=='success'){
+                        window.location.href="essay/detail/"+returndata.e_id;
+                    }
+                },
+                error: function (returndata) {
+                    alert(returndata)
+                }
+            });
+        })
+    })
+</script>
 </body>
 </html>

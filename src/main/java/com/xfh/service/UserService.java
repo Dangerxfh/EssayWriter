@@ -10,5 +10,5 @@ public interface UserService {
     public User userLogin(User user);
 
     //注册
-    public  boolean userRegister(User user);
+    public  boolean userRegister(User user) throws Exception;
 }

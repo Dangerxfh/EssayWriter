@@ -14,11 +14,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My JSP 'content.jsp' starting page</title>
     <link rel="stylesheet" href="<%=basePath%>editormd/css/editormd.css"/>
+      <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css"/>
 	
   </head>
   
   <body>
-  <div class="">
+  <c:import url="../top.jsp"/>
+  <div class="container">
  		<div >
  			<c:import url="../../../share.jsp"/>
  		</div>
@@ -27,7 +29,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             ${essay.e_content}
  		</div>
   </div>
-  	
-   	
+
   </body>
 </html>

@@ -17,6 +17,7 @@
 <link rel="stylesheet" type="text/css" href="../css/metro.css">
 
 <script type="text/javascript" src="../js/jquery.reveal.js"></script>
+<script src="http://www.jq22.com/jquery/jquery-1.6.2.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>
 <style type="text/css">
 
@@ -59,7 +60,10 @@
 
     <script type="text/javascript">
         $(function () {
-                $("input").click(function () {
+
+            $("#topLogin").hide();
+            $(".navbar-right").hide();
+            $("input").click(function () {
                 $("#login_msg").hide();
             });
         })
